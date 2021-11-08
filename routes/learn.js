@@ -37,4 +37,17 @@ router.post('/saveNote', async (ctx, next) => {
   }
 })
 
+router.post('/getNote', async (ctx, next) => {
+  let { pageSize, pageNum } = ctx.request.body
+  console.log(pageSize, pageNum);
+
+  const result = await noteCrud.findAll({}, {}, { limit: Number(pageSize), skip: pageSize * pageNum, sort: { 'createAt': -1 } })
+  console.log(result)
+  ctx.body = {
+    code: 1,
+    msg: '成功!',
+    result: result
+  }
+})
+
 module.exports = router

@@ -33,6 +33,8 @@ class noteCrud extends mongoCrud {
   constructor() {
     super(noteModel)
   }
+
+
 }
 
 module.exports = new noteCrud()

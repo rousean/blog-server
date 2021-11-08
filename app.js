@@ -33,6 +33,8 @@ app.use(json())
 app.use(logger())
 // 静态资源
 app.use(require('koa-static')(__dirname + '/public'))
+// app.use(require('koa-static')(__dirname + '/public/dist'))
+
 
 app.use(
   views(__dirname + '/views', {
