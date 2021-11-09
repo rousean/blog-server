@@ -1,29 +1,31 @@
 const mongoose = require('mongoose')
 const mongoCrud = require('../db/mongo-crud')
-const baseModel = require('./base-model')
 
 const Schema = mongoose.Schema
 
 // 定义schema
 const noteSchema = new Schema({
-  ...baseModel,
-  note_id: {
+  noteTitle: {
     type: String,
     required: true,
   },
-  note_title: {
-    type: String,
-    required: true,
-  },
-  note_tag: {
+  noteTag: {
     type: Array,
     required: true,
   },
-  note_filename: {
+  noteAbstract: {
     type: String,
     required: true,
   },
-})
+  noteContent: {
+    type: String,
+    required: true,
+  },
+},
+  {
+    timestamps: true
+  }
+)
 
 // 定义model
 const noteModel = mongoose.model('note', noteSchema, 'note')

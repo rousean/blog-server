@@ -13,41 +13,59 @@ router.prefix('/learn')
 
 // 保存笔记
 router.post('/saveNote', async (ctx, next) => {
-  let { note_id, note_title, note_tag, note_filename, note_content } = ctx.request.body
-  // 如果文件不存在,则创建文件;如果文件存在,则覆盖文件内容
-  fs.writeFile(`${mdPath}/${note_filename}.md`, note_content, err => {
-    if (err) {
-      ctx.body = {
-        code: 0,
-        msg: '失败!',
-      }
-    }
-  })
+  let { noteTitle, noteTag, noteContent, noteAbstract } = ctx.request.body
   try {
-    await noteCrud.save({ note_id, note_title, note_tag, note_filename })
+    const result = await noteCrud.save({ noteTitle, noteTag, noteContent, noteAbstract })
+    const filename = noteTitle + '_' + result.id
+    // 如果文件不存在,则创建文件;如果文件存在,则覆盖文件内容
+    fs.writeFile(`${mdPath}/${filename}.md`, noteContent, err => {
+      if (err) {
+        ctx.body = {
+          code: 0,
+          msg: '写入失败!',
+        }
+      }
+    })
     ctx.body = {
       code: 1,
-      msg: '成功!',
+      msg: '保存文章成功!',
     }
   } catch (err) {
     ctx.body = {
       code: 0,
-      msg: '失败!',
+      msg: '保存文章失败!',
     }
   }
 })
 
 router.post('/getNote', async (ctx, next) => {
   let { pageSize, pageNum } = ctx.request.body
-  console.log(pageSize, pageNum);
+  let condition = ctx.request.body.condition || {}
+  console.log(condition);
 
-  const result = await noteCrud.findAll({}, {}, { limit: Number(pageSize), skip: pageSize * pageNum, sort: { 'createAt': -1 } })
-  console.log(result)
-  ctx.body = {
-    code: 1,
-    msg: '成功!',
-    result: result
+  try {
+    const pageTotal = await noteCrud.count({})
+    const result = await noteCrud.findAll(condition, { createdAt: 1, noteTitle: 1, noteTag: 1, noteAbstract: 1, noteContent: 1 }, { limit: Number(pageSize), skip: pageSize * pageNum - pageSize, sort: { 'createAt': 1 } })
+    console.log(result);
+
+    ctx.body = {
+      code: 1,
+      msg: '成功!',
+      data: {
+        pageTotal: pageTotal,
+        pageSize: pageSize,
+        pageNum: pageNum,
+        content: result
+      }
+    }
+  } catch (error) {
+    ctx.body = {
+      code: 0,
+      msg: '失败!',
+    }
+
   }
+
 })
 
 module.exports = router

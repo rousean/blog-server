@@ -7,6 +7,7 @@ mongoose.connect(config.mongodb, {
   autoIndex: false,
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  // timestamps: true
 })
 
 mongoose.Promise = global.Promise

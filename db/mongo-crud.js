@@ -15,11 +15,11 @@ class mongoCrud {
    */
   create (obj) {
     return new Promise((resolve, reject) => {
-      this.Model.create(obj, (error, result) => {
-        if (error) {
-          reject(error)
+      this.Model.create(obj, (err, res) => {
+        if (err) {
+          reject(err)
         } else {
-          resolve(result)
+          resolve(res)
         }
       })
     })
@@ -33,9 +33,9 @@ class mongoCrud {
   save (obj) {
     return new Promise((resolve, reject) => {
       let entity = new this.Model(obj)
-      entity.save((error, result) => {
-        if (error) {
-          reject(error)
+      entity.save((err, result) => {
+        if (err) {
+          reject(err)
         } else {
           resolve(result)
         }
@@ -50,9 +50,9 @@ class mongoCrud {
    */
   insertMany (objs) {
     return new Promise((resolve, reject) => {
-      this.Model.insertMany(objs, (error, result) => {
-        if (error) {
-          reject(error)
+      this.Model.insertMany(objs, (err, result) => {
+        if (err) {
+          reject(err)
         } else {
           resolve(result)
         }
@@ -67,9 +67,26 @@ class mongoCrud {
    */
   findById (id) {
     return new Promise((resolve, reject) => {
-      this.Model.findById(id, (error, result) => {
-        if (error) {
-          reject(error)
+      this.Model.findById(id, (err, result) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(result)
+        }
+      })
+    })
+  }
+
+  /**
+   * 查询总数
+   * @param {conditions} 查询条件
+   * @returns {Promise}
+   */
+  count (conditions) {
+    return new Promise((resolve, reject) => {
+      this.Model.count(conditions, (err, result) => {
+        if (err) {
+          reject(err)
         } else {
           resolve(result)
         }
@@ -86,11 +103,11 @@ class mongoCrud {
    */
   findAll (conditions, fields, options) {
     return new Promise((resolve, reject) => {
-      this.Model.find(conditions, fields, options, (error, results) => {
-        if (error) {
-          reject(error)
+      this.Model.find(conditions, fields, options, (err, res) => {
+        if (err) {
+          reject(err)
         } else {
-          resolve(results)
+          resolve(res)
         }
       }).lean()
     })
@@ -99,16 +116,17 @@ class mongoCrud {
   /**
    * 查找符合条件的第一条doc
    * @param condition
-   * @param constraints
+   * @param fields
+   * @param options
    * @returns {Promise}
    */
-  findOne (condition, constraints) {
+  findOne (condition, fields, options) {
     return new Promise((resolve, reject) => {
-      this.Model.findOne(condition, constraints ? constraints : null, (error, results) => {
-        if (error) {
-          reject(error)
+      this.Model.findOne(condition, fields, options, (err, res) => {
+        if (err) {
+          reject(err)
         } else {
-          resolve(results)
+          resolve(res)
         }
       })
     })
@@ -143,11 +161,11 @@ class mongoCrud {
    */
   update (condition, updater) {
     return new Promise((resolve, reject) => {
-      this.Model.update(condition, updater, (error, results) => {
-        if (error) {
-          reject(error)
+      this.Model.update(condition, updater, (err, res) => {
+        if (err) {
+          reject(err)
         } else {
-          resolve(results)
+          resolve(res)
         }
       })
     })
@@ -160,9 +178,9 @@ class mongoCrud {
    */
   remove (condition) {
     return new Promise((resolve, reject) => {
-      this.Model.remove(condition, (error, result) => {
-        if (error) {
-          reject(error)
+      this.Model.remove(condition, (err, result) => {
+        if (err) {
+          reject(err)
         } else {
           resolve(result)
         }
