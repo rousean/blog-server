@@ -6,6 +6,7 @@ const upload = require('../middleware/material')
 const { uploadSingle } = require('../controller/material')
 
 router.prefix('/material')
+
 // 单文件上传
 router.post('/uploadSingle', upload.single('file'), uploadSingle)
 

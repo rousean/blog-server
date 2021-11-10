@@ -5,6 +5,7 @@ const router = require('koa-router')()
 const fs = require('fs')
 const path = require('path')
 const noteCrud = require('../models/note')
+const uploadImage = require('../middleware/uploadImage')
 
 // 学习笔记.md文件保存目录
 const mdPath = path.resolve('public/note')
@@ -41,31 +42,54 @@ router.post('/saveNote', async (ctx, next) => {
 router.post('/getNote', async (ctx, next) => {
   let { pageSize, pageNum } = ctx.request.body
   let condition = ctx.request.body.condition || {}
-  console.log(condition);
-
   try {
-    const pageTotal = await noteCrud.count({})
-    const result = await noteCrud.findAll(condition, { createdAt: 1, noteTitle: 1, noteTag: 1, noteAbstract: 1, noteContent: 1 }, { limit: Number(pageSize), skip: pageSize * pageNum - pageSize, sort: { 'createAt': 1 } })
-    console.log(result);
-
+    const pageTotal = await noteCrud.count(condition)
+    const result = await noteCrud.findAll(
+      condition,
+      { createdAt: 1, noteTitle: 1, noteTag: 1, noteAbstract: 1 },
+      { limit: Number(pageSize), skip: pageSize * pageNum - pageSize, sort: { createAt: 1 } }
+    )
     ctx.body = {
       code: 1,
-      msg: '成功!',
+      msg: '请求成功!',
       data: {
         pageTotal: pageTotal,
         pageSize: pageSize,
         pageNum: pageNum,
-        content: result
-      }
+        content: result,
+      },
     }
   } catch (error) {
     ctx.body = {
       code: 0,
-      msg: '失败!',
+      msg: '请求失败!',
     }
-
   }
+})
 
+router.post('/getNoteById', async (ctx, next) => {
+  let { id } = ctx.request.body
+  try {
+    const result = await noteCrud.findOne({ _id: id }, { noteTitle: 1, noteContent: 1 }, {})
+    ctx.body = {
+      code: 1,
+      msg: '请求成功!',
+      data: result,
+    }
+  } catch (error) {
+    ctx.body = {
+      code: 0,
+      msg: '请求失败!',
+    }
+  }
+})
+
+router.post('/uploadImage', uploadImage.single('file'), (ctx, next) => {
+  console.log(ctx)
+  ctx.body = {
+    code: 1,
+    msg: '请求成功',
+  }
 })
 
 module.exports = router
