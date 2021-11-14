@@ -1,23 +1,22 @@
 /**
  * 引入相关依赖
- *
  * */
-const Koa = require('koa')
+const Koa = require("koa")
 const app = new Koa()
-const views = require('koa-views')
-const json = require('koa-json')
-const onerror = require('koa-onerror')
-const bodyparser = require('koa-bodyparser')
-const logger = require('koa-logger')
-const cors = require('@koa/cors')
-require('./db/mongoose')
+const views = require("koa-views")
+const json = require("koa-json")
+const onerror = require("koa-onerror")
+const bodyparser = require("koa-bodyparser")
+const logger = require("koa-logger")
+const cors = require("@koa/cors")
+require("./db/mongoose")
 
 // 引入路由
-const index = require('./routes/index')
-const users = require('./routes/users')
-const material = require('./routes/material')
-const learn = require('./routes/learn')
-const audio = require('./routes/audio')
+const index = require("./routes/index")
+const users = require("./routes/users")
+const material = require("./routes/material")
+const learn = require("./routes/learn")
+const audio = require("./routes/audio")
 
 // 错误处理
 onerror(app)
@@ -26,19 +25,21 @@ onerror(app)
 app.use(cors())
 app.use(
   bodyparser({
-    enableTypes: ['json', 'form', 'text'],
+    enableTypes: ["json", "form", "text"],
   })
 )
 app.use(json())
 app.use(logger())
 
 // 静态资源
-app.use(require('koa-static')(__dirname + '/public'))
-app.use(require('koa-static')(__dirname + '/public/dist'))
+app.use(require("koa-static")(__dirname + "/public"))
+app.use(require("koa-static")(__dirname + "/public/dist"))
+// app.use(require("koa-static")(__dirname + "/public/images"))
+// app.use(require("koa-static")(__dirname + "/public/audio"))
 
 app.use(
-  views(__dirname + '/views', {
-    extension: 'pug',
+  views(__dirname + "/views", {
+    extension: "pug",
   })
 )
 
@@ -58,8 +59,8 @@ app.use(learn.routes(), learn.allowedMethods())
 app.use(audio.routes(), audio.allowedMethods())
 
 // error-handling
-app.on('error', (err, ctx) => {
-  console.error('server error', err, ctx)
+app.on("error", (err, ctx) => {
+  console.error("server error", err, ctx)
 })
 
 module.exports = app
