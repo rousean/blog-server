@@ -13,7 +13,7 @@ class mongoCrud {
    * @param obj 构造实体的对象
    * @returns {Promise}
    */
-  create (obj) {
+  create(obj) {
     return new Promise((resolve, reject) => {
       this.Model.create(obj, (err, res) => {
         if (err) {
@@ -30,7 +30,7 @@ class mongoCrud {
    * @param obj 构造实体的对象
    * @returns {Promise}
    */
-  save (obj) {
+  save(obj) {
     return new Promise((resolve, reject) => {
       let entity = new this.Model(obj)
       entity.save((err, result) => {
@@ -48,7 +48,7 @@ class mongoCrud {
    * @param objs 构造实体的对象
    * @returns {Promise}
    */
-  insertMany (objs) {
+  insertMany(objs) {
     return new Promise((resolve, reject) => {
       this.Model.insertMany(objs, (err, result) => {
         if (err) {
@@ -65,7 +65,7 @@ class mongoCrud {
    * @param {_id} id id属性
    * @returns {Promise}
    */
-  findById (id) {
+  findById(id) {
     return new Promise((resolve, reject) => {
       this.Model.findById(id, (err, result) => {
         if (err) {
@@ -82,7 +82,7 @@ class mongoCrud {
    * @param {conditions} 查询条件
    * @returns {Promise}
    */
-  count (conditions) {
+  count(conditions) {
     return new Promise((resolve, reject) => {
       this.Model.count(conditions, (err, result) => {
         if (err) {
@@ -101,7 +101,7 @@ class mongoCrud {
    * @param options 查询回调 Object
    * @returns {Promise}
    */
-  findAll (conditions, fields, options) {
+  findAll(conditions, fields, options) {
     return new Promise((resolve, reject) => {
       this.Model.find(conditions, fields, options, (err, res) => {
         if (err) {
@@ -120,7 +120,7 @@ class mongoCrud {
    * @param options
    * @returns {Promise}
    */
-  findOne (condition, fields, options) {
+  findOne(condition, fields, options) {
     return new Promise((resolve, reject) => {
       this.Model.findOne(condition, fields, options, (err, res) => {
         if (err) {
@@ -139,7 +139,7 @@ class mongoCrud {
    * @param orderType
    * @returns {Promise}
    */
-  findOneByOrder (condition, orderColumn, orderType) {
+  findOneByOrder(condition, orderColumn, orderType) {
     return new Promise((resolve, reject) => {
       this.Model.findOne(condition)
         .sort({ [orderColumn]: orderType })
@@ -159,9 +159,9 @@ class mongoCrud {
    * @param updater 更新操作
    * @returns {Promise}
    */
-  update (condition, updater) {
+  update(condition, updater) {
     return new Promise((resolve, reject) => {
-      this.Model.update(condition, updater, (err, res) => {
+      this.Model.findOneAndUpdate(condition, updater, (err, res) => {
         if (err) {
           reject(err)
         } else {
@@ -176,13 +176,13 @@ class mongoCrud {
    * @param condition 查找条件
    * @returns {Promise}
    */
-  remove (condition) {
+  remove(condition) {
     return new Promise((resolve, reject) => {
-      this.Model.remove(condition, (err, result) => {
+      this.Model.findOneAndDelete(condition, (err, res) => {
         if (err) {
           reject(err)
         } else {
-          resolve(result)
+          resolve(res)
         }
       })
     })
