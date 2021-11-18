@@ -48,11 +48,11 @@ router.post("/getNote", async (ctx, next) => {
     const result = await noteCrud.findAll(
       condition,
       { createdAt: 1, noteTitle: 1, noteTag: 1, noteAbstract: 1 },
-      { limit: Number(pageSize), skip: pageSize * pageNum - pageSize, sort: { createAt: 1 } }
+      { limit: Number(pageSize), skip: pageSize * pageNum - pageSize, sort: { _id: -1 } }
     )
     ctx.body = {
       code: 1,
-      msg: "请求成功!",
+      msg: "请求成功！",
       data: {
         pageTotal: pageTotal,
         pageSize: pageSize,
@@ -63,7 +63,7 @@ router.post("/getNote", async (ctx, next) => {
   } catch (error) {
     ctx.body = {
       code: 0,
-      msg: "请求失败!",
+      msg: "请求失败！",
     }
   }
 })
@@ -75,13 +75,13 @@ router.post("/getNoteById", async (ctx, next) => {
     const result = await noteCrud.findOne({ _id: id }, {}, {})
     ctx.body = {
       code: 1,
-      msg: "请求成功!",
+      msg: "请求成功！",
       data: result,
     }
   } catch (error) {
     ctx.body = {
       code: 0,
-      msg: "请求失败!",
+      msg: "请求失败！",
     }
   }
 })
@@ -93,12 +93,12 @@ router.post("/deleteNote", async (ctx, next) => {
     await noteCrud.remove({ _id: id })
     ctx.body = {
       code: 1,
-      msg: "删除成功!",
+      msg: "删除成功！",
     }
   } catch (error) {
     ctx.body = {
       code: 0,
-      msg: "删除失败!",
+      msg: "删除失败！",
     }
   }
 })
@@ -114,18 +114,18 @@ router.post("/updateNote", async (ctx, next) => {
       if (err) {
         ctx.body = {
           code: 0,
-          msg: "写入失败!",
+          msg: "写入失败！",
         }
       }
     })
     ctx.body = {
       code: 1,
-      msg: "文章修改成功!",
+      msg: "文章修改成功！",
     }
   } catch (err) {
     ctx.body = {
       code: 0,
-      msg: "修改文章失败!",
+      msg: "修改文章失败！",
     }
   }
 })
@@ -134,7 +134,44 @@ router.post("/updateNote", async (ctx, next) => {
 router.post("/uploadImage", uploadImage.single("file"), (ctx, next) => {
   ctx.body = {
     code: 1,
-    msg: "请求成功",
+    msg: "请求成功！",
+  }
+})
+
+router.get("/tagOptions", (ctx, next) => {
+  ctx.body = {
+    code: 1,
+    msg: "请求成功！",
+    data: [
+      {
+        type: "success",
+        label: "JavaScript",
+      },
+      {
+        type: "danger",
+        label: "HTML",
+      },
+      {
+        type: "warning",
+        label: "CSS",
+      },
+      {
+        type: "danger",
+        label: "TypeScript",
+      },
+      {
+        type: "success",
+        label: "Vue",
+      },
+      {
+        type: "danger",
+        label: "Node",
+      },
+      {
+        type: "warning",
+        label: "Deno",
+      },
+    ],
   }
 })
 

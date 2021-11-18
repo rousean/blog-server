@@ -12,7 +12,6 @@ router.prefix("/audio")
 
 // 获取音乐列表
 router.get("/audioList", (ctx, next) => {
-  console.log(ctx.res)
   let result = fs.readdirSync(audioPath, "utf8")
   let audioList = result.reduce((acc, cur, idx, list) => {
     let audioTitle = cur.split(" - ")[1].split(".")[0]
