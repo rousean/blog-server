@@ -1,9 +1,22 @@
-const router = require('koa-router')()
+const router = require("koa-router")()
 
-router.prefix('/users')
+router.prefix("/user")
 
-router.get('/', function (ctx, next) {
-  ctx.body = '登录成功'
+router.post("/login", function (ctx, next) {
+  let { username, password } = ctx.request.body
+  if (username === "admin" && password === "admin") {
+    ctx.body = {
+      code: 1,
+      msg: "登录成功！",
+      token: "admin",
+    }
+  } else {
+    ctx.body = {
+      code: 0,
+      msg: "登录失败！",
+      token: "admin",
+    }
+  }
 })
 
 module.exports = router
