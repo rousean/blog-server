@@ -14,7 +14,7 @@ router.post("/login", function (ctx, next) {
     ctx.body = {
       code: 0,
       msg: "登录失败！",
-      token: "admin",
+      token: "",
     }
   }
 })

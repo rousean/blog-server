@@ -23,18 +23,18 @@ router.post("/saveNote", async (ctx, next) => {
       if (err) {
         ctx.body = {
           code: 0,
-          msg: "写入失败!",
+          msg: "写入失败！",
         }
       }
     })
     ctx.body = {
       code: 1,
-      msg: "保存文章成功!",
+      msg: "保存文章成功！",
     }
   } catch (err) {
     ctx.body = {
       code: 0,
-      msg: "保存文章失败!",
+      msg: "保存文章失败！",
     }
   }
 })
@@ -52,7 +52,7 @@ router.post("/getNote", async (ctx, next) => {
     )
     ctx.body = {
       code: 1,
-      msg: "请求成功！",
+      msg: "文章请求成功！",
       data: {
         pageTotal: pageTotal,
         pageSize: pageSize,
@@ -63,7 +63,7 @@ router.post("/getNote", async (ctx, next) => {
   } catch (error) {
     ctx.body = {
       code: 0,
-      msg: "请求失败！",
+      msg: "文章请求失败！",
     }
   }
 })
@@ -75,13 +75,13 @@ router.post("/getNoteById", async (ctx, next) => {
     const result = await noteCrud.findOne({ _id: id }, {}, {})
     ctx.body = {
       code: 1,
-      msg: "请求成功！",
+      msg: "文章请求成功！",
       data: result,
     }
   } catch (error) {
     ctx.body = {
       code: 0,
-      msg: "请求失败！",
+      msg: "文章请求失败！",
     }
   }
 })
@@ -93,12 +93,12 @@ router.post("/deleteNote", async (ctx, next) => {
     await noteCrud.remove({ _id: id })
     ctx.body = {
       code: 1,
-      msg: "删除成功！",
+      msg: "文章删除成功！",
     }
   } catch (error) {
     ctx.body = {
       code: 0,
-      msg: "删除失败！",
+      msg: "文章删除成功！",
     }
   }
 })

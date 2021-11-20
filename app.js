@@ -33,9 +33,6 @@ app.use(logger())
 
 // 静态资源
 app.use(require("koa-static")(__dirname + "/public"))
-app.use(require("koa-static")(__dirname + "/public/dist"))
-// app.use(require("koa-static")(__dirname + "/public/images"))
-// app.use(require("koa-static")(__dirname + "/public/audio"))
 
 app.use(
   views(__dirname + "/views", {
@@ -60,7 +57,8 @@ app.use(audio.routes(), audio.allowedMethods())
 
 // error-handling
 app.on("error", (err, ctx) => {
-  console.error("server error", err, ctx)
+  // console.error("server error", err, ctx)
+  ctx.body = err
 })
 
 module.exports = app
