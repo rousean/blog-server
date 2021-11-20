@@ -145,6 +145,10 @@ router.get("/tagOptions", (ctx, next) => {
     data: [
       {
         type: "success",
+        label: "All",
+      },
+      {
+        type: "success",
         label: "JavaScript",
       },
       {

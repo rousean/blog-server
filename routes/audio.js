@@ -22,13 +22,13 @@ router.get("/audioList", (ctx, next) => {
   if (audioList) {
     ctx.body = {
       code: 1,
-      msg: "成功!",
-      audioList: audioList,
+      msg: "音乐列表请求成功！",
+      data: audioList,
     }
   } else {
     ctx.body = {
       code: 0,
-      msg: "失败!",
+      msg: "音乐列表请求失败！",
     }
   }
 })
