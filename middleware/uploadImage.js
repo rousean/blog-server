@@ -1,8 +1,8 @@
-const path = require('path')
-const multer = require('@koa/multer')
+const path = require("path")
+const multer = require("@koa/multer")
 
 // 作品信息上传目录
-const uploadPath = path.resolve('public/images')
+const uploadPath = path.resolve("public/images")
 
 // 配置信息
 const storage = multer.diskStorage({

@@ -2,8 +2,7 @@
 
 // 全局配置
 const config = {
-  port: "4000",
-  mongodb: "mongodb://localhost:27017/blog",
+  mongodb: "mongodb://127.0.0.1:27017/blog",
   mysql: {
     host: "127.0.0.1", // IP
     port: 3306, // 端口号

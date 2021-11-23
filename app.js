@@ -57,8 +57,8 @@ app.use(audio.routes(), audio.allowedMethods())
 
 // error-handling
 app.on("error", (err, ctx) => {
-  // console.error("server error", err, ctx)
-  ctx.body = err
+  console.error("server error", err, ctx)
+  // ctx.body = err
 })
 
 module.exports = app

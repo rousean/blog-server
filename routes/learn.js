@@ -64,6 +64,7 @@ router.post("/getNote", async (ctx, next) => {
     ctx.body = {
       code: 0,
       msg: "文章请求失败！",
+      error: error,
     }
   }
 })
