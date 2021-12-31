@@ -172,6 +172,10 @@ router.get("/tagOptions", (ctx, next) => {
         type: "warning",
         label: "Deno",
       },
+      {
+        type: "success",
+        label: "其他",
+      },
     ],
   }
 })

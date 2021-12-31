@@ -1,8 +1,8 @@
-const path = require('path')
-const multer = require('@koa/multer')
+const path = require("path")
+const multer = require("@koa/multer")
 
 // 作品信息上传目录
-const uploadPath = path.resolve('public/opus')
+const uploadPath = path.resolve("public/opus")
 
 // 配置信息
 const storage = multer.diskStorage({
@@ -10,14 +10,9 @@ const storage = multer.diskStorage({
     cb(null, uploadPath)
   },
   filename: (req, file, cb) => {
-    console.log(file)
     cb(null, `${file.originalname}`)
   },
 })
-const limits = {
-  fileSize: 10 * 1024 * 1024,
-  files: 10,
-}
-const upload = multer({ storage, limits })
+const upload = multer({ storage })
 
 module.exports = upload
