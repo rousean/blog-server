@@ -48,7 +48,7 @@ router.post("/getNote", async (ctx, next) => {
     const result = await noteCrud.findAll(
       condition,
       { createdAt: 1, noteTitle: 1, noteTag: 1, noteAbstract: 1 },
-      { limit: Number(pageSize), skip: pageSize * pageNum - pageSize, sort: { _id: -1 } }
+      { limit: Number(pageSize), skip: pageSize * pageNum - pageSize, sort: { createdAt: -1 } }
     )
     ctx.body = {
       code: 1,
